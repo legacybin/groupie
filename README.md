@@ -8,24 +8,22 @@ Groupie lets you treat your content as logical groups and handles change notific
 
 # Try it out:
 
-[ ![Download](https://api.bintray.com/packages/lisawray/maven/groupie/images/download.svg) ](https://bintray.com/lisawray/maven/groupie/_latestVersion)
-
 ```gradle
-implementation "com.xwray:groupie:$groupie_version"
+implementation "com.github.legacybin.groupie:groupie:$groupie_version"
 ```
 
 Groupie includes a module for Kotlin and Kotlin Android extensions. Never write a ViewHolder again—Kotlin generates view references and Groupie uses a generic holder. [Setup here.](#kotlin) 
 
 ```gradle
-implementation "com.xwray:groupie:$groupie_version"
-implementation "com.xwray:groupie-kotlin-android-extensions:$groupie_version"
+implementation "com.github.legacybin.groupie:groupie:$groupie_version"
+implementation "com.github.legacybin.groupie:groupie-kotlin-android-extensions:$groupie_version"
 ```
 
 Groupie also has a support module for Android's [view binding](https://developer.android.com/topic/libraries/view-binding). This module also supports Android [data binding](https://developer.android.com/topic/libraries/data-binding/index.html), so if your project uses both data binding and view binding, you don't have to add the dependency on the data binding support module. [Setup here.](#view-binding)
 
 ```gradle
-implementation "com.xwray:groupie:$groupie_version"
-implementation "com.xwray:groupie-viewbinding:$groupie_version" 
+implementation "com.github.legacybin.groupie:groupie:$groupie_version"
+implementation "com.github.legacybin.groupie:groupie-viewbinding:$groupie_version" 
 ```
 
 ### Note:
@@ -34,8 +32,8 @@ If using `groupie-viewbinding` in a databinding project is only available when u
 If using an older Gradle Plugin version with databinding the you can use the standalone `groupie-databinding` library to generate view holders. [Setup here.](#data-binding) This is deprecated and will be removed in a future version in favour of only using `groupie-viewbinding`.
 
 ```gradle
-implementation "com.xwray:groupie:$groupie_version"
-implementation "com.xwray:groupie-databinding:$groupie_version" 
+implementation "com.github.legacybin.groupie:groupie:$groupie_version"
+implementation "com.github.legacybin.groupie:groupie-databinding:$groupie_version" 
 ```
 
 You can also use Groupie with Java and your existing ViewHolders. 
@@ -180,15 +178,36 @@ In your project level `build.gradle` file, include:
 
 ```
 buildscript {
-    ext.kotlin_version = '1.3.71'
+    ext.kotlin_version = '1.4.10'  //last version to support deprecated kotlin-android-extensions
     repositories {
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 ```
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+In new projects, the `settings.gradle` file has a `dependencyResolutionManagement` block, which needs to specify the repository as well:
+```
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }  // <--
+        jcenter() // Warning: this repository is going to shut down soon
+    }
+}
+
 
 In your app `build.gradle` file, include:
 
@@ -209,8 +228,8 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'com.xwray:groupie:$groupie_version'
-    implementation 'com.xwray:groupie-kotlin-android-extensions:$groupie_version'
+    implementation 'com.github.legacybin.groupie:groupie:$groupie_version'
+    implementation 'com.github.legacybin.groupie:groupie-kotlin-android-extensions:$groupie_version'
 }
 ```
 
@@ -226,14 +245,14 @@ Add to your app module's `build.gradle`:
 
 ```gradle
 android {
-    viewBinding {
-        enabled = true
+    buildFeatures {
+        viewBinding = true
     }
 }
 
 dependencies {
-    implementation "com.xwray:groupie:$groupie_version"
-    implementation "com.xwray:groupie-viewbinding:$groupie_version"
+    implementation "com.github.legacybin.groupie:groupie:$groupie_version"
+    implementation "com.github.legacybin.groupie:groupie-viewbinding:$groupie_version"
 }
 ```
 
@@ -264,14 +283,14 @@ Add to your app module's build.gradle:
 
 ```gradle
 android {
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding = true
     }
 }
 
 dependencies {
-    implementation "com.xwray:groupie:$groupie_version"
-    implementation "com.xwray:groupie-databinding:$groupie_version"
+    implementation "com.github.legacybin.groupie:groupie:$groupie_version"
+    implementation "com.github.legacybin.groupie:groupie-databinding:$groupie_version"
 }
 ```
 
