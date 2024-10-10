@@ -4,7 +4,8 @@ apply plugin: 'kotlin-android-extensions'
 
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -58,5 +59,3 @@ repositories {
 tasks.withType(Javadoc).all {
     enabled = false
 }
-
-apply from: rootProject.file('release-bintray.gradle')

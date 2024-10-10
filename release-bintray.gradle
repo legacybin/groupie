@@ -29,5 +29,3 @@ ext {
 // Set up the Android Maven publication.
 apply from: rootProject.file('jcenter/maven-install.gradle')
 
-// Publish on Bintray.
-apply from: rootProject.file('jcenter/bintray.gradle')

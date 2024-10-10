@@ -2,7 +2,8 @@ apply plugin: 'com.android.library'
 
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
     }
 }
 
@@ -38,5 +39,3 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
 }
-
-apply from: rootProject.file('release-bintray.gradle')
